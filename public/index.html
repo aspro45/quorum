@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Quorum - The Treasury That Funds What Ships</title>
+<meta name="description" content="An AI-screened grant treasury on GenLayer. One public rubric, no committee: the contract reads each proposal against the rubric and a validator set funds it automatically." />
+<link rel="stylesheet" href="./styles.css?v=20">
+<link rel="preconnect" href="https://rsms.me/">
+<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top"><span class="logo-mark"><i class="ph-fill ph-circles-three-plus"></i></span> Quorum</a>
+    <div class="nav-mid">
+      <a href="#how">How it works</a><a href="#proposals">Proposals</a><a href="#rubric">Rubric</a>
+    </div>
+    <div class="nav-end">
+      <span id="walletslot"><button class="btn ghost sm" id="connectBtn">Connect</button></span>
+      <button class="btn primary sm" id="navPostBtn">Request a grant</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="auroraCanvas"></canvas>
+  <div class="hero-glow"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <span class="pill reveal"><span class="pdot"></span> AI-screened grant treasury - live on GenLayer</span>
+      <h1 class="reveal d1">Fund the work,<br>not the <em>politics.</em></h1>
+      <p class="lede reveal d2">Quorum is a community treasury with one public rubric and no voting committee. Anyone requests a grant; the contract reads it against the rubric and a validator set funds what merits funding automatically, on-chain, with the reasoning attached.</p>
+      <div class="hero-cta reveal d3">
+        <button class="btn primary lg" id="heroPostBtn">Request a grant <i class="ph-bold ph-arrow-right"></i></button>
+        <a class="btn glass lg" href="#proposals">See live proposals</a>
+      </div>
+      <div class="hero-foot reveal d4"><span><i class="ph-fill ph-circle"></i> Paid in the same transaction it's approved</span></div>
+    </div>
+    <div class="hero-visual reveal d2">
+      <div class="win">
+        <div class="win-bar"><span class="wd"></span><span class="wd"></span><span class="wd"></span><span class="win-t">treasury.quorum</span></div>
+        <div class="win-body">
+          <div class="win-balance"><span class="wb-l">Treasury balance</span><div class="wb-v"><b id="winTreasury">-</b><span>GEN</span></div></div>
+          <div class="win-spark"><span style="--h:40%"></span><span style="--h:62%"></span><span style="--h:48%"></span><span style="--h:80%"></span><span style="--h:66%"></span><span style="--h:92%"></span><span style="--h:74%"></span></div>
+          <div class="win-cells"><div class="wc"><span>Funded</span><b id="winFunded">0</b></div><div class="wc"><span>Pending</span><b id="winPending">0</b></div><div class="wc"><span>Rejected</span><b id="winRejected">0</b></div></div>
+          <div class="win-prop" id="winProp"><div class="wp-empty">Reading the chain...</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue"><i class="ph-bold ph-caret-down"></i></div>
+</header>
+
+<div class="marquee"><div class="mq-track" id="mqTrack"><span>ON-CHAIN / NO COMMITTEE / ONE RUBRIC / PAID INSTANTLY / AUDITABLE / </span><span>ON-CHAIN / NO COMMITTEE / ONE RUBRIC / PAID INSTANTLY / AUDITABLE / </span></div></div>
+
+<main>
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stat reveal"><b id="stTreasury">-</b><span>GEN in treasury</span></div>
+    <div class="stat reveal d1"><b id="stTotal">0</b><span>Proposals reviewed</span></div>
+    <div class="stat reveal d2"><b id="stFunded">0</b><span>Grants funded</span></div>
+    <div class="stat reveal d3"><button class="btn glass sm" id="refreshBtn"><i class="ph-bold ph-arrows-clockwise"></i> Sync chain</button></div>
+  </section>
+
+  <!-- HOW -->
+  <section class="how" id="how">
+    <div class="sec-head reveal"><span class="kicker">How it works</span><h2>Three steps, zero gatekeepers.</h2></div>
+    <div class="steps">
+      <div class="step reveal"><div class="step-i"><i class="ph-bold ph-coins"></i></div><span class="step-n">01</span><h3>Fund the treasury</h3><p>Anyone tops up the shared pool with GEN. The balance is transparent and on-chain; every change is visible.</p></div>
+      <div class="step reveal d1"><div class="step-i"><i class="ph-bold ph-note-pencil"></i></div><span class="step-n">02</span><h3>Request a grant</h3><p>A builder submits a title, a plan, and an amount. It enters the queue, public from the first block.</p></div>
+      <div class="step reveal d2"><div class="step-i"><i class="ph-bold ph-scales"></i></div><span class="step-n">03</span><h3>The rubric decides</h3><p>The contract reads the plan against the rubric and validators agree. Merits funding: paid instantly. Does not: rejected, with a reason.</p></div>
+    </div>
+  </section>
+
+  <!-- RUBRIC -->
+  <section class="rubric" id="rubric">
+    <div class="rubric-card reveal">
+      <div class="rubric-h"><i class="ph-fill ph-scroll"></i> The funding rubric</div>
+      <p id="rubricText">Reading the chain...</p>
+      <div class="rubric-f">Every proposal is judged against these words: the same bar for everyone.</div>
+    </div>
+  </section>
+
+  <!-- PROPOSALS -->
+  <section class="proposals" id="proposals">
+    <div class="sec-head row reveal"><div><span class="kicker">On-chain, right now</span><h2>Live proposals</h2></div><span class="mono count" id="propCount">-</span></div>
+    <div class="prop-list" id="propList"><div class="pl-empty">Reading the chain...</div></div>
+  </section>
+
+  <!-- WHY / FAQ -->
+  <section class="why">
+    <div class="sec-head reveal"><span class="kicker">Why Quorum</span><h2>Merit, made mechanical.</h2></div>
+    <div class="why-grid">
+      <div class="why-card reveal"><i class="ph-bold ph-scales"></i><h3>One public rubric</h3><p>Criteria are written once and visible to all. No backroom deals, no shifting goalposts.</p></div>
+      <div class="why-card reveal d1"><i class="ph-bold ph-lightning"></i><h3>Paid automatically</h3><p>Approved grants transfer in the same transaction that approves them. No multisig delays.</p></div>
+      <div class="why-card reveal d2"><i class="ph-bold ph-eye"></i><h3>Every verdict reasoned</h3><p>Funded or rejected, each decision records its rationale on-chain for anyone to audit.</p></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="cta-card reveal">
+      <canvas id="ctaCanvas"></canvas>
+      <div class="cta-body">
+        <h2>Have something worth building?</h2>
+        <p>Write the plan, name the amount, and let the rubric decide. One transaction on GenLayer studionet.</p>
+        <button class="btn primary lg" id="ctaPostBtn">Request a grant <i class="ph-bold ph-arrow-right"></i></button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="foot-brand"><a class="brand" href="#top"><span class="logo-mark"><i class="ph-fill ph-circles-three-plus"></i></span> Quorum</a><p>An AI-screened grant treasury on GenLayer studionet.</p></div>
+    <div class="foot-cols">
+      <div class="foot-col"><span class="foot-h">Protocol</span><a href="#how">How it works</a><a href="#proposals">Proposals</a><a href="#rubric">Rubric</a></div>
+      <div class="foot-col"><span class="foot-h">GenLayer</span><a href="https://docs.genlayer.com/" target="_blank" rel="noopener">Documentation</a><a href="https://studio.genlayer.com/" target="_blank" rel="noopener">Studio</a><a id="contractLink" href="https://explorer-studio.genlayer.com" target="_blank" rel="noopener">Contract</a></div>
+    </div>
+  </div>
+  <div class="foot-base"><span>Quorum - studionet</span><span class="net"><span class="net-dot"></span>live</span></div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-h"><h3 id="drawerTitle">New grant proposal</h3><button class="icon-btn" id="closeDrawer" aria-label="Close"><i class="ph-bold ph-x"></i></button></div>
+  <div class="drawer-b" id="drawerBody"></div>
+</aside>
+<div id="log"></div>
+<script type="module" src="./app.js?v=20"></script>
+</body>
+</html>

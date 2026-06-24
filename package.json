@@ -1,0 +1,11 @@
+{
+  "name": "quorum-grant-treasury",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx http-server public -p 4805 -c-1",
+    "security:scan": "node scripts/security-check.mjs",
+    "check": "npm run security:scan"
+  }
+}
