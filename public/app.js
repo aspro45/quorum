@@ -1,8 +1,8 @@
-﻿import { makeReader, write, connectWallet, activeAccount, balanceOf, short, toGen, GEN, fmtErr }
+import { makeReader, write, connectWallet, activeAccount, balanceOf, short, toGen, GEN, fmtErr }
   from "./shared/genlayer-lite.js";
 
 const CONTRACT = "0x76cd3670fCcF415B78E8f43C580ef21A7dd419b4";
-const EXPLORER = "https://explorer-studio.genlayer.com/address/0x76cd3670fCcF415B78E8f43C580ef21A7dd419b4";
+const EXPLORER = "https://explorer-studio.genlayer.com/contracts/0x76cd3670fCcF415B78E8f43C580ef21A7dd419b4";
 const { read } = makeReader(CONTRACT);
 const PENDING = 0, FUNDED = 1, REJECTED = 2;
 const STLABEL = ["Pending", "Funded", "Rejected"];
@@ -11,7 +11,7 @@ let account = null, proposals = [], rubric = "", treasury = "0";
 const $ = (id) => document.getElementById(id);
 const esc = (s) => (s || "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
-$("contractLink").href = "https://explorer-studio.genlayer.com/address/0x76cd3670fCcF415B78E8f43C580ef21A7dd419b4";
+$("contractLink").href = "https://explorer-studio.genlayer.com/contracts/0x76cd3670fCcF415B78E8f43C580ef21A7dd419b4";
 $("contractLink").textContent = "Contract " + short(CONTRACT) + " ->";
 $("contractLink").target = "_blank";
 $("contractLink").rel = "noopener";

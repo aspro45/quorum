@@ -13,7 +13,7 @@ This is not a voting board. Quorum is designed as a funding machine with one vis
 | Network | GenLayer Studionet |
 | Chain ID | `61999` |
 | Contract | `0x76cd3670fCcF415B78E8f43C580ef21A7dd419b4` |
-| Contract Explorer | https://explorer-studio.genlayer.com/address/0x76cd3670fCcF415B78E8f43C580ef21A7dd419b4 |
+| Contract Explorer | https://explorer-studio.genlayer.com/contracts/0x76cd3670fCcF415B78E8f43C580ef21A7dd419b4 |
 | Deploy TX | `0xd7fdc8a0f560cd1e54ed13c908efc0f8dd5cdef8dd9663ff075a5588fda85a4e` |
 | Deployed | `2026-06-23T21:24:32.567Z` |
 
